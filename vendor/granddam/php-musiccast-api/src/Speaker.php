@@ -117,23 +117,25 @@ class Speaker
     /**
      * Get the current volume of this speaker.
      *
+     * @param String $zone The name of zone ('main','zone2', ..., 'zoneN')
      * @return int
      */
-    public function getVolume()
+    public function getVolume($zone = "main")
     {
-        return (int)$this->call('zone', 'getStatus', ['main'])['volume'];
+        return (int)$this->call('zone', 'getStatus', [$zone])['volume'];
     }
 
     /**
      * Adjust the volume of this speaker to a specific value.
      *
      * @param int $volume The amount to set the volume to between 0 and 100
+     * @param String $zone The name of zone ('main','zone2', ..., 'zoneN')
      *
      * @return static
      */
-    public function setVolume($volume)
+    public function setVolume($volume, $zone = "main")
     {
-        $this->call('zone', 'setVolume', ['main', $volume]);
+        $this->call('zone', 'setVolume', [$zone, $volume]);
         return $this;
     }
 
@@ -142,110 +144,119 @@ class Speaker
      * Adjust the volume of this speaker by a relative amount.
      *
      * @param int $adjust The amount to adjust by between -100 and 100
+     * @param String $zone The name of zone ('main','zone2', ..., 'zoneN')
      *
      * @return static
      */
-    public function adjustVolume($adjust)
+    public function adjustVolume($adjust, $zone = "main")
     {
-        $this->call('zone', 'setVolume', ['main', $adjust > 0 ? 'up' : 'down', abs($adjust)]);
+        $this->call('zone', 'setVolume', [$zone, $adjust > 0 ? 'up' : 'down', abs($adjust)]);
         return $this;
     }
 
     /**
      * Check if this speaker is currently muted.
+     * @param String $zone The name of zone ('main','zone2', ..., 'zoneN')
      *
      * @return bool
      */
-    public function isMuted()
+    public function isMuted($zone = "main")
     {
-        return $this->call('zone', 'getStatus', ['main'])['mute'];
+        return $this->call('zone', 'getStatus', [$zone])['mute'];
     }
 
     /**
      * Unmute this speaker.
      *
+     * @param String $zone The name of zone ('main','zone2', ..., 'zoneN')
      * @return static
      */
-    public function unmute()
+    public function unmute($zone = "main")
     {
-        return $this->mute(false);
+        return $this->mute(false, $zone );
     }
 
     /**
      * Mute this speaker.
      *
      * @param bool $mute Whether the speaker should be muted or not
+     * @param String $zone The name of zone ('main','zone2', ..., 'zoneN')
      *
      * @return static
      */
-    public function mute($mute = true)
+    public function mute($mute = true, $zone = "main")
     {
-        $this->call('zone', 'setMute', ['main', $mute]);
+        $this->call('zone', 'setMute', [$zone, $mute]);
         return $this;
     }
 
     /**
      * Power On this speaker.
      *
+     * @param String $zone The name of zone ('main','zone2', ..., 'zoneN')
      * @return static
      */
-    public function powerOn()
+    public function powerOn($zone = "main")
     {
-        return $this->setPower('on');
+        return $this->setPower('on', $zone);
     }
 
 
     /**
      * Power On this speaker.
      *
+     * @param String $zone The name of zone ('main','zone2', ..., 'zoneN')
      * @return bool
      */
-    public function isPowerOn()
+    public function isPowerOn($zone = "main")
     {
-        return $this->call('zone', 'getStatus', ['main'])["power"] == 'on';
+        return $this->call('zone', 'getStatus', [$zone])["power"] == 'on';
     }
 
     /**
      * Stand by this speaker.
      *
+     * @param String $zone The name of zone ('main','zone2', ..., 'zoneN')
      * @return static
      */
-    public function standBy()
+    public function standBy($zone = "main")
     {
-        return $this->setPower('standby');
+        return $this->setPower('standby', $zone);
     }
 
 
     /**
      * Power toggle this speaker.
      *
+     * @param String $zone The name of zone ('main','zone2', ..., 'zoneN')
      * @return static
      */
-    public function powerToggle()
+    public function powerToggle($zone = "main")
     {
-        return $this->setPower('toggle');
+        return $this->setPower('toggle', $zone);
     }
 
-    private function setPower($power)
+    private function setPower($power, $zone = "main")
     {
-        $this->call('zone', 'setPower', ['main', $power]);
+        $this->call('zone', 'setPower', [$zone, $power]);
         return $this;
     }
 
     /**
      * Get the currently active media info.
      *
+     * @param String $zone The name of zone ('main','zone2', ..., 'zoneN')
      * @return array
      */
-    public function getInput()
+    public function getInput($zone = "main")
     {
-        return $this->call('zone', 'getStatus', ['main'])['input'];
+        return $this->call('zone', 'getStatus', [$zone])['input'];
     }
 
 
-    public function isStreaming()
+    public function isStreaming($zone = "main")
     {
-        $input = 'input' . $this->call('zone', 'getStatus', ['main'])['input'];
+        $input = 'input' . $this->call('zone', 'getStatus', [$zone])['input'];
         return $input == "tuner" || stripos($input, "hdmi") != false || stripos($input, "av") != false
             || stripos($input, "aux") != false || stripos($input, "audio") != false;
     }

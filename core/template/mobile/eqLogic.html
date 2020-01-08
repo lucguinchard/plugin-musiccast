@@ -127,7 +127,7 @@
                 $(".musiccast[data-eqLogic_uid=#uid#] .mute").css('color', 'red');
             }
 
-           if ('#input#' == 'tv' || '#input#' == 'hdmi') {
+           if ('#input#' == 'tv' || '#input#'.startsWith('hdmi')) {
                 $(".musiccast[data-eqLogic_uid=#uid#] .jaquette_musiccast").empty()
                 .append('<i class="icon techno-tv fa-10x"></i>');
                 $(".musiccast[data-eqLogic_uid=#uid#] .nav").hide();
@@ -142,7 +142,7 @@
                 .append('<img src="#thumbnail#" class="jaquette_picture jaquette_picture_back affiche_right_musiccast"/>');
                 $(".musiccast[data-eqLogic_uid=#uid#] .action_playlist").hide();
                 $(".musiccast[data-eqLogic_uid=#uid#] .action_list").hide();
-            } else if ('#input#' == 'spotify') {
+            } else if ('#input#' == 'spotify' || '#input#' == 'napster' || '#input#' == 'pandora' || '#input#' == 'siriusxm' || '#input#' == 'juke' || '#input#' == 'radiko' || '#input#' == 'qobuz' || '#input#' == 'tidal' || '#input#' == 'deezer') {
                 $(".musiccast[data-eqLogic_uid=#uid#] .jaquette_musiccast").empty()
                 .append('<img src="#thumbnail#" class="jaquette_picture jaquette_picture_front"/>')
                 .append('<img src="#thumbnail#" class="jaquette_picture jaquette_picture_back affiche_left_musiccast"/>')
