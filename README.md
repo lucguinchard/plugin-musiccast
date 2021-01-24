@@ -1,1 +1,1 @@
-# plugin-MusicCast
+# Deprecated/Obsolète → https://github.com/lucguinchard/plugin-Yamaha-musiccast
